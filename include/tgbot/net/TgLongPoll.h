@@ -26,18 +26,28 @@
 #include "tgbot/Bot.h"
 #include "tgbot/Api.h"
 #include "tgbot/EventHandler.h"
+#include "memory"
+
+using namespace std;
 
 namespace TgBot {
 
+
+class ITgLongPool
+{
+public:
+	virtual void start() = 0;
+
+};
 /**
  * This class handles long polling and updates parsing.
  * @ingroup net
  */
-class TgLongPoll {
-
+class TgLongPoll: public ITgLongPool
+{
 public:
-	TgLongPoll(const Api* api, const EventHandler* eventHandler);
-	TgLongPoll(const Bot& bot);
+	explicit TgLongPoll(const Api* api, const EventHandler* eventHandler);
+	explicit TgLongPoll(const shared_ptr<IBot> &bot);
 
 	/**
 	 * Starts long poll. After new update will come, this method will parse it and send to EventHandler which invokes your listeners. Designed to be executed in a loop.

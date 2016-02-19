@@ -24,10 +24,11 @@
 
 namespace TgBot {
 
+
 TgLongPoll::TgLongPoll(const Api* api, const EventHandler* eventHandler) : _api(api), _eventHandler(eventHandler) {
 }
 
-TgLongPoll::TgLongPoll(const Bot& bot) : TgLongPoll(&bot.getApi(), &bot.getEventHandler()) {
+TgLongPoll::TgLongPoll(const shared_ptr<IBot> &bot) : TgLongPoll(&bot->getApi(), &bot->getEventHandler()) {
 }
 
 void TgLongPoll::start() {

@@ -31,12 +31,21 @@
 
 namespace TgBot {
 
+class IBot
+{
+public:
+	virtual const std::string& getToken() const = 0;
+	virtual const Api& getApi() const = 0;
+	virtual EventBroadcaster& getEvents() = 0;
+	virtual const EventHandler& getEventHandler() const = 0;
+};
+
 /**
  * This object holds other objects specific for this bot instance.
  * @ingroup general
  */
-class Bot {
-
+class Bot: public IBot
+{
 public:
 	explicit Bot(const std::string& token) : _token(token), _api(token), _eventHandler(&_eventBroadcaster) {
 	}
